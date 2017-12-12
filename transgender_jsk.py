@@ -1,27 +1,32 @@
 #!/usr/bin/env python
 
-import random
+import os
+import os.path as osp
 
 import numpy as np
+import skimage.io
 import torch
 from torch.autograd import Variable
 
 import mvtk
 
-from data_loader import get_loader
-from solver import Generator
 from detect_face import get_faces
+from solver import Generator
 
 
 if __name__ == '__main__':
-    G_path = './stargan_celebA/models/18_12000_G.pth'
+    G_path = './stargan_celebA/models/20_4000_G.pth'
     print(G_path)
     G = Generator(64, c_dim=5, repeat_num=6)
     G.load_state_dict(torch.load(G_path))
     G.eval()
     G.cuda()
 
-    for bbox, img_org in get_faces():
+    out_dir = 'logs/transgender_jsk'
+    if not osp.exists(out_dir):
+        os.makedirs(out_dir)
+
+    for i, (bbox, img_org) in enumerate(get_faces()):
         y1, x1, y2, x2 = bbox
 
         img = img_org[y1:y2, x1:x2]
@@ -70,5 +75,8 @@ if __name__ == '__main__':
 
         # mvtk.io.plot_tile([img, yi])
         viz = mvtk.image.tile([img1, img2])
-        mvtk.io.plot_tile([img1, img2])
-        mvtk.io.show()
+        out_file = osp.join(out_dir, '%08d.jpg' % i)
+        skimage.io.imsave(out_file, viz)
+        print(out_dir)
+        # mvtk.io.plot_tile([img1, img2])
+        # mvtk.io.show()

@@ -15,7 +15,7 @@ def get_faces():
     for img_file in glob.glob('./face2016/*.jpg'):
         print(img_file)
         img = plt.imread(img_file)
-        if (img.shape[0] * img.shape[1]) < (200 * 200):
+        if (img.shape[0] * img.shape[1]) < (100 * 100):
             continue
         scale = np.sqrt((500. * 500.) / (img.shape[0] * img.shape[1]))
         img = cv2.resize(img, None, None, fx=scale, fy=scale)
