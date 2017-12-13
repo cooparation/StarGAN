@@ -9,4 +9,6 @@ pip install gdown
 
 mkdir -p stargan_celebA/models
 cd stargan_celebA/models
-gdown 'https://drive.google.com/uc?id=1_38fMoR_nQ8epOOfuCfs7BJxqwwNXO3y' -O 20_4000_G.pth
+if [ ! -e 20_4000_G.pth ]; then
+  gdown 'https://drive.google.com/uc?id=1_38fMoR_nQ8epOOfuCfs7BJxqwwNXO3y' -O 20_4000_G.pth
+fi

@@ -13,7 +13,6 @@ def get_faces():
     # face_cascade = cv2.CascadeClassifier('/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml')
 
     for img_file in glob.glob('./face2016/*.jpg'):
-        print(img_file)
         img = plt.imread(img_file)
         if (img.shape[0] * img.shape[1]) < (100 * 100):
             continue

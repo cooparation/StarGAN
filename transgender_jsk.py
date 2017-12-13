@@ -16,13 +16,13 @@ from solver import Generator
 
 if __name__ == '__main__':
     G_path = './stargan_celebA/models/20_4000_G.pth'
-    print(G_path)
+    print(osp.realpath(G_path))
     G = Generator(64, c_dim=5, repeat_num=6)
     G.load_state_dict(torch.load(G_path))
     G.eval()
     G.cuda()
 
-    out_dir = 'logs/transgender_jsk'
+    out_dir = osp.realpath('logs/transgender_jsk')
     if not osp.exists(out_dir):
         os.makedirs(out_dir)
 
@@ -77,6 +77,6 @@ if __name__ == '__main__':
         viz = mvtk.image.tile([img1, img2])
         out_file = osp.join(out_dir, '%08d.jpg' % i)
         skimage.io.imsave(out_file, viz)
-        print(out_dir)
+        print('==> %s' % out_file)
         # mvtk.io.plot_tile([img1, img2])
         # mvtk.io.show()

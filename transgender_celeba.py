@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import os.path as osp
 import random
 
 import numpy as np
@@ -14,7 +15,7 @@ from solver import Generator
 
 if __name__ == '__main__':
     G_path = './stargan_celebA/models/20_4000_G.pth'
-    print(G_path)
+    print(osp.realpath(G_path))
     G = Generator(64, c_dim=5, repeat_num=6)
     G.load_state_dict(torch.load(G_path))
     G.eval()
