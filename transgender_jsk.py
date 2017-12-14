@@ -8,7 +8,7 @@ import skimage.io
 import torch
 from torch.autograd import Variable
 
-import mvtk
+import cv2
 
 from detect_face import get_faces
 from solver import Generator
@@ -67,14 +67,13 @@ if __name__ == '__main__':
         yi = yi.transpose(1, 2, 0)
 
         H, W = y2 - y1, x2 - x1
-        yi = mvtk.image.resize(yi, height=H, width=W)
+        yi = cv2.resize(yi, (W, H))
 
         img1 = img_org.copy()
         img2 = img_org.copy()
         img2[y1:y2, x1:x2] = yi
 
-        # mvtk.io.plot_tile([img, yi])
-        viz = mvtk.image.tile([img1, img2])
+        viz = np.hstack((img1, img2))
         out_file = osp.join(out_dir, '%08d.jpg' % i)
         skimage.io.imsave(out_file, viz)
         print('==> %s' % out_file)
